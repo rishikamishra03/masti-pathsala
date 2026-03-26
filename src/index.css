@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Thoda bacchon wala font add karne ke liye */
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+  background-color: #f0f9ff; /* Sky blue background */
+}
