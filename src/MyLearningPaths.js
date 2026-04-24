@@ -4,6 +4,8 @@ import { X } from 'lucide-react';
 
 // --- BACKGROUND IMAGE IMPORT ---
 import bgPath from './mypath.jpg'; 
+import VideoPortal from './VideoPortal';
+import { useState } from 'react';
 
 const MyLearningPaths = ({ onBack }) => {
   const labels = [
@@ -22,6 +24,17 @@ const MyLearningPaths = ({ onBack }) => {
       pos: { top: '66%', left: '62%' },
     },
   ];
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  if (selectedCategory) {
+    return (
+      <VideoPortal 
+        category={selectedCategory} 
+        onBack={() => setSelectedCategory(null)} 
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden font-sans bg-[#1A237E]">
@@ -92,6 +105,7 @@ const MyLearningPaths = ({ onBack }) => {
                 delay: index * 0.5 
               }}
               whileHover={{ scale: 1.1, rotate: index % 2 === 0 ? 2 : -2 }}
+              onClick={() => setSelectedCategory(item.id)}
               className={`${item.color} text-white px-8 py-3 rounded-[2rem] shadow-[0_8px_0_rgba(0,0,0,0.2)] text-center min-w-[220px] border-4 border-white/40 pointer-events-auto cursor-pointer relative group`}
             >
               {/* Animated Text */}
