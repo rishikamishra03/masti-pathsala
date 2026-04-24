@@ -241,7 +241,7 @@ function UWBg({scrollX}){
 }
 
 // ── MAIN GAME ────────────────────────────────────────────────────
-export default function NumberSwimGame(){
+export default function NumberSwimGame({ onGameOver }){
   const W = typeof window!=="undefined"?window.innerWidth:800;
   const H = typeof window!=="undefined"?window.innerHeight:600;
   const RAY_X = W*0.20;
@@ -369,8 +369,19 @@ export default function NumberSwimGame(){
     if(didColl){ setColl([...newColl]); setScore(s=>s+10); setGlow(true); setTimeout(()=>setGlow(false),300); }
     if(didHit){ setLives(newLives); setHit(true); setTimeout(()=>setHit(false),300); }
 
-    if(win){ setPhase("win"); phaseRef.current="win"; audio.win(); return; }
-    if(lose){ setPhase("lose"); phaseRef.current="lose"; return; }
+    if(win){ 
+      setPhase("win"); 
+      phaseRef.current="win"; 
+      audio.win(); 
+      if (onGameOver) onGameOver(score + 10); // +10 for the final collection
+      return; 
+    }
+    if(lose){ 
+      setPhase("lose"); 
+      phaseRef.current="lose"; 
+      if (onGameOver) onGameOver(score);
+      return; 
+    }
 
     // spawn
     if(ts-lastSpawn.current>spawnIv.current){

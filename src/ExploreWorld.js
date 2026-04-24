@@ -4,8 +4,14 @@ import { X } from 'lucide-react';
 
 // --- BACKGROUND IMAGE IMPORT ---
 import bgImage from './bg.jpeg'; 
+import Avatar from './Avatar';
+import Safari from './Safari';
+import Aquarium from './Aquarium';
+import HamsterLogic from './HamsterLogic';
 
-const ExploreScene = ({ onBack }) => {
+const ExploreScene = ({ onBack, onAvatarSave }) => {
+  const [activeApp, setActiveApp] = React.useState(null);
+  
   // --- COORDINATES (Labels shifted slightly up) ---
   const labels = [
     {
@@ -13,44 +19,56 @@ const ExploreScene = ({ onBack }) => {
       title: 'Bot Beats',
       subtitle: 'Coding',
       color: 'bg-[#B71C1C]', 
-      pos: { top: '72%', left: '11%' }, // Shiffted Up
+      pos: { top: '72%', left: '11%' },
     },
     {
       id: 'aquarium',
       title: 'Aquarium',
       subtitle: 'Social-Emotional Learning',
       color: 'bg-[#0D47A1]', 
-      pos: { top: '61%', left: '35.5%' }, // Shifted Up
+      pos: { top: '61%', left: '35.5%' },
     },
     {
       id: 'hamster',
       title: 'Hamster',
       subtitle: 'Spatial Logic',
       color: 'bg-[#880E4F]', 
-      pos: { top: '41%', left: '66%' }, // Shifted Up
+      pos: { top: '41%', left: '66%' },
     },
     {
       id: 'safari',
       title: 'Safari',
       subtitle: 'Life Science',
       color: 'bg-[#1B5E20]', 
-      pos: { top: '90%', left: '38%' }, // Shifted Up
+      pos: { top: '35%', left: '15%' },
     },
     {
       id: 'avatar',
       title: 'Avatar',
-      subtitle: 'Self-expression',
-      color: 'bg-[#B71C1C]', 
-      pos: { top: '86%', left: '56%' }, // Shifted Up
+      subtitle: 'Customize You',
+      color: 'bg-[#E65100]', 
+      pos: { top: '49%', left: '46%' },
     },
     {
       id: 'pet_town',
       title: 'Pet Town',
       subtitle: 'Narrative Play',
       color: 'bg-[#311B92]', 
-      pos: { top: '85%', left: '89%' }, // Shifted Up
+      pos: { top: '85%', left: '89%' },
     },
   ];
+
+  if (activeApp === 'safari') return <Safari onBack={() => setActiveApp(null)} />;
+  if (activeApp === 'aquarium') return <Aquarium onBack={() => setActiveApp(null)} />;
+  if (activeApp === 'hamster') return <HamsterLogic onBack={() => setActiveApp(null)} />;
+  if (activeApp === 'avatar') return (
+    <Avatar 
+      onBack={() => {
+        setActiveApp(null);
+        if (onAvatarSave) onAvatarSave();
+      }} 
+    />
+  );
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden font-sans">
@@ -120,6 +138,12 @@ const ExploreScene = ({ onBack }) => {
           >
             {/* The Label Box */}
             <div 
+              onClick={() => {
+                if (item.id === 'avatar') setActiveApp('avatar');
+                if (item.id === 'safari') setActiveApp('safari');
+                if (item.id === 'aquarium') setActiveApp('aquarium');
+                if (item.id === 'hamster') setActiveApp('hamster');
+              }}
               className={`${item.color} text-white px-5 py-1.5 rounded-xl shadow-lg text-center min-w-[180px] border-2 border-white/40 pointer-events-auto cursor-pointer hover:brightness-110 active:scale-95 transition-all`}
             >
               <div className="text-[15px] font-black tracking-tight leading-tight uppercase">
@@ -136,6 +160,7 @@ const ExploreScene = ({ onBack }) => {
       {/* Lighting effect */}
       <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none z-10" />
     </div>
+
   );
 };
 

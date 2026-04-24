@@ -13,6 +13,11 @@ import colorsImg from './colors.png';
 import gameImg from './games.png';
 import drawImg from './draw.png';
 
+import AlphabetGame from './alphabet';
+import NumberViewer from './NumberViewer';
+import ColoringGame from './Drawing';
+
+
 const playSound = (text) => {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'hi-IN';
@@ -20,7 +25,7 @@ const playSound = (text) => {
   window.speechSynthesis.speak(utterance);
 };
 
-export default function App() {
+export default function App({ onGameFinish }) {
   const [selectedId, setSelectedId] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
 
@@ -111,7 +116,47 @@ export default function App() {
 
       {/* --- ZOOMED OVERLAY --- */}
       <AnimatePresence>
-        {selectedId && (
+        {selectedId === 1 && (
+          <div className="fixed inset-0 z-[500] bg-white">
+            <button 
+              onClick={() => setSelectedId(null)}
+              className="absolute top-6 left-6 z-[600] bg-red-500 text-white px-6 py-2 rounded-xl font-black shadow-xl border-b-4 border-red-700 hover:bg-red-600 transition-all"
+            >
+              ← Back
+            </button>
+            <AlphabetGame 
+              onBack={() => setSelectedId(null)} 
+            />
+          </div>
+        )}
+        {selectedId === 2 && (
+          <div className="fixed inset-0 z-[500] bg-white">
+            <button 
+              onClick={() => setSelectedId(null)}
+              className="absolute top-6 left-6 z-[600] bg-red-500 text-white px-6 py-2 rounded-xl font-black shadow-xl border-b-4 border-red-700 hover:bg-red-600 transition-all"
+            >
+              ← Back
+            </button>
+            <NumberViewer 
+              onNavigateHome={() => setSelectedId(null)} 
+              onComplete={(score) => {
+                if (onGameFinish) onGameFinish('num', score);
+              }}
+            />
+          </div>
+        )}
+        {selectedId === 8 && (
+          <div className="fixed inset-0 z-[500] bg-white">
+            <button 
+              onClick={() => setSelectedId(null)}
+              className="absolute top-6 left-6 z-[600] bg-red-500 text-white px-6 py-2 rounded-xl font-black shadow-xl border-b-4 border-red-700 hover:bg-red-600 transition-all"
+            >
+              ← Back
+            </button>
+            <ColoringGame onBack={() => setSelectedId(null)} />
+          </div>
+        )}
+        {selectedId > 2 && selectedId !== 8 && (
           <div className="fixed inset-0 z-[200] flex items-center justify-center p-10 bg-black/50 backdrop-blur-md">
             <motion.div 
               layoutId={`card-${selectedId}`}

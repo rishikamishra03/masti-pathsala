@@ -731,7 +731,7 @@ function SpaceGameCanvas({ question, answer, onHit, onMiss, isPaused, level, gam
 }
 
 // ─── MAIN GAME COMPONENT ─────────────────────────────────────────────────────
-export default function SpaceGame() {
+export default function SpaceGame({ onGameOver }) {
   const [gameState, setGameState] = useState("menu"); // menu | playing | paused | gameover
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
@@ -790,6 +790,7 @@ export default function SpaceGame() {
           clearInterval(timerRef.current);
           AudioEngine.gameOver();
           setGameState("gameover");
+          if (onGameOver) onGameOver(score);
           return 0;
         }
         if (t <= 10) AudioEngine.tick(true);
