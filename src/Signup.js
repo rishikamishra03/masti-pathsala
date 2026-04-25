@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Rocket, Mail, Lock, User as UserIcon, ArrowRight } from 'lucide-react';
 
 export default function Signup({ onSignup, onToggleLogin }) {
-    const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+    const [formData, setFormData] = useState({ username: '', email: '', password: '', role: 'student' });
     const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
@@ -78,6 +78,31 @@ export default function Signup({ onSignup, onToggleLogin }) {
                             onChange={(e) => setFormData({...formData, email: e.target.value})}
                             required
                         />
+                    </div>
+                    <div className="flex flex-col gap-3">
+                        <label className="text-[#1A237E] font-black text-sm uppercase tracking-wider ml-1">I am a...</label>
+                        <div className="grid grid-cols-2 gap-4">
+                            <motion.button
+                                type="button"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => setFormData({...formData, role: 'student'})}
+                                className={`p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2 ${formData.role === 'student' ? 'border-blue-500 bg-blue-50 shadow-md' : 'border-gray-100 bg-gray-50'}`}
+                            >
+                                <div className="text-3xl">👶</div>
+                                <span className={`font-bold ${formData.role === 'student' ? 'text-blue-600' : 'text-gray-500'}`}>Student</span>
+                            </motion.button>
+                            <motion.button
+                                type="button"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => setFormData({...formData, role: 'teacher'})}
+                                className={`p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2 ${formData.role === 'teacher' ? 'border-orange-500 bg-orange-50 shadow-md' : 'border-gray-100 bg-gray-50'}`}
+                            >
+                                <div className="text-3xl">👩‍🏫</div>
+                                <span className={`font-bold ${formData.role === 'teacher' ? 'text-orange-600' : 'text-gray-500'}`}>Teacher</span>
+                            </motion.button>
+                        </div>
                     </div>
                     <div className="relative">
                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />

@@ -13,9 +13,11 @@ import colorsImg from './colors.png';
 import gameImg from './games.png';
 import drawImg from './draw.png';
 
-import AlphabetGame from './alphabet';
+import AlphabetViewer from './AlphabetViewer';
 import NumberViewer from './NumberViewer';
 import ColoringGame from './Drawing';
+import PoemSection from './PoemSection';
+import WordTracer from './WordTracer';
 
 
 const playSound = (text) => {
@@ -124,8 +126,8 @@ export default function App({ onGameFinish }) {
             >
               ← Back
             </button>
-            <AlphabetGame 
-              onBack={() => setSelectedId(null)} 
+            <AlphabetViewer 
+              onNavigateHome={() => setSelectedId(null)} 
             />
           </div>
         )}
@@ -156,11 +158,21 @@ export default function App({ onGameFinish }) {
             <ColoringGame onBack={() => setSelectedId(null)} />
           </div>
         )}
-        {selectedId > 2 && selectedId !== 8 && (
+        {selectedId === 4 && (
+          <div className="fixed inset-0 z-[500] bg-white">
+            <PoemSection onBack={() => setSelectedId(null)} />
+          </div>
+        )}
+        {selectedId === 3 && (
+          <div className="fixed inset-0 z-[500] bg-white">
+            <WordTracer onBack={() => setSelectedId(null)} />
+          </div>
+        )}
+        {selectedId > 4 && selectedId !== 8 && (
           <div className="fixed inset-0 z-[200] flex items-center justify-center p-10 bg-black/50 backdrop-blur-md">
             <motion.div 
               layoutId={`card-${selectedId}`}
-              className={`${selectedItem.bg} w-full max-w-2xl aspect-video rounded-[60px] border-[15px] border-white shadow-2xl relative flex flex-col items-center justify-center`}
+              className={`${selectedItem.bg} w-full max-max-w-2xl aspect-video rounded-[60px] border-[15px] border-white shadow-2xl relative flex flex-col items-center justify-center`}
             >
               <button onClick={() => setSelectedId(null)} className="absolute top-6 right-6 p-4 bg-white rounded-full shadow-lg text-red-500 hover:rotate-90 transition-transform">
                 <X size={32} strokeWidth={4} />

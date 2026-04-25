@@ -12,6 +12,8 @@ const VIDEO_DATA = {
     { id: 'LDgJj_NAqXA', title: 'The Little Mermaid', category: 'Stories', thumbnail: 'https://i.ytimg.com/vi/LDgJj_NAqXA/mqdefault.jpg' },
     { id: 'rdJeIOI6COQ', title: 'Bedtime With Blippi', category: 'Stories', thumbnail: 'https://i.ytimg.com/vi/rdJeIOI6COQ/mqdefault.jpg' },
     { id: 'dBZgA50scbM', title: 'Blippi Reads a Story!', category: 'Stories', thumbnail: 'https://i.ytimg.com/vi/dBZgA50scbM/mqdefault.jpg' },
+    { id: 'mQ9SjDkM-gI', title: 'Goldilocks & The Three Bears', category: 'Stories', thumbnail: 'https://i.ytimg.com/vi/mQ9SjDkM-gI/mqdefault.jpg' },
+    { id: 'Z3S_9o0fBoc', title: 'Classic Fairy Tales Compilation', category: 'Stories', thumbnail: 'https://i.ytimg.com/vi/Z3S_9o0fBoc/mqdefault.jpg' },
   ],
   numbers: [
     { id: 'Aq4UAss33qA', title: 'Count And Move Song', category: 'Counting', thumbnail: 'https://i.ytimg.com/vi/Aq4UAss33qA/mqdefault.jpg' },
@@ -22,6 +24,32 @@ const VIDEO_DATA = {
     { id: 'EbgwPx6mYu4', title: 'Counting 1 to 20 Songs', category: 'Counting', thumbnail: 'https://i.ytimg.com/vi/EbgwPx6mYu4/mqdefault.jpg' },
     { id: 'zDtRvUx-AHQ', title: 'Learn To Count With Blippi', category: 'Counting', thumbnail: 'https://i.ytimg.com/vi/zDtRvUx-AHQ/mqdefault.jpg' },
     { id: '0B1max66jds', title: 'Blippi 1-10 SONG', category: 'Counting', thumbnail: 'https://i.ytimg.com/vi/0B1max66jds/mqdefault.jpg' },
+    { id: 'DR-cfDsHCGA', title: 'Five Little Monkeys Jumping', category: 'Counting', thumbnail: 'https://i.ytimg.com/vi/DR-cfDsHCGA/mqdefault.jpg' },
+    { id: 'b0NHrFNZWh0', title: 'Ten In The Bed Song', category: 'Counting', thumbnail: 'https://i.ytimg.com/vi/b0NHrFNZWh0/mqdefault.jpg' },
+  ],
+  alphabets: [
+    { id: 'vD98OvvDNEs', title: 'Phonics Song with Two Words', category: 'Alphabets', thumbnail: 'https://i.ytimg.com/vi/vD98OvvDNEs/mqdefault.jpg' },
+    { id: '75p-N9YKqNo', title: 'Classic ABC Song', category: 'Alphabets', thumbnail: 'https://i.ytimg.com/vi/75p-N9YKqNo/mqdefault.jpg' },
+    { id: '_UR-l3QI2nE', title: 'Alphabet Song for Kids', category: 'Alphabets', thumbnail: 'https://i.ytimg.com/vi/_UR-l3QI2nE/mqdefault.jpg' },
+    { id: 'BELlZKpi1Zs', title: 'ABC Phonics Song 2', category: 'Alphabets', thumbnail: 'https://i.ytimg.com/vi/BELlZKpi1Zs/mqdefault.jpg' },
+    { id: '36n93jvjkDs', title: 'Learn ABCs with Blippi', category: 'Alphabets', thumbnail: 'https://i.ytimg.com/vi/36n93jvjkDs/mqdefault.jpg' },
+    { id: '_Y8zH1_fHVs', title: 'Alphabet Adventure Game', category: 'Alphabets', thumbnail: 'https://i.ytimg.com/vi/_Y8zH1_fHVs/mqdefault.jpg' },
+    { id: 'ezmsrB59mj8', title: 'The ABC Song | ChuChu TV', category: 'Alphabets', thumbnail: 'https://i.ytimg.com/vi/ezmsrB59mj8/mqdefault.jpg' },
+  ],
+  animals: [
+    { id: 'wCfWmlnJl-A', title: 'The Animal Sounds Song', category: 'Animals', thumbnail: 'https://i.ytimg.com/vi/wCfWmlnJl-A/mqdefault.jpg' },
+    { id: 'q_6X2X0uV-k', title: 'Wild Animals for Kids', category: 'Animals', thumbnail: 'https://i.ytimg.com/vi/q_6X2X0uV-k/mqdefault.jpg' },
+    { id: 't9WAGkQU_Ec', title: 'Let\'s Go To The Zoo!', category: 'Animals', thumbnail: 'https://i.ytimg.com/vi/t9WAGkQU_Ec/mqdefault.jpg' },
+    { id: 'yvS8p_eA-lM', title: 'Old MacDonald Had A Farm', category: 'Animals', thumbnail: 'https://i.ytimg.com/vi/yvS8p_eA-lM/mqdefault.jpg' },
+    { id: 'pWepfJ-8XU0', title: 'Baby Shark Animal Dance', category: 'Animals', thumbnail: 'https://i.ytimg.com/vi/pWepfJ-8XU0/mqdefault.jpg' },
+    { id: 'owz9YpE391g', title: 'Jungle Animals Song', category: 'Animals', thumbnail: 'https://i.ytimg.com/vi/owz9YpE391g/mqdefault.jpg' },
+  ],
+  colors: [
+    { id: 'yBTBy4p59mk', title: 'The Colors Song', category: 'Colors', thumbnail: 'https://i.ytimg.com/vi/yBTBy4p59mk/mqdefault.jpg' },
+    { id: 'zxIpA5nF_LY', title: 'Learning Colors with Blippi', category: 'Colors', thumbnail: 'https://i.ytimg.com/vi/zxIpA5nF_LY/mqdefault.jpg' },
+    { id: 'fX_vE6E-U8M', title: 'Colors Everywhere!', category: 'Colors', thumbnail: 'https://i.ytimg.com/vi/fX_vE6E-U8M/mqdefault.jpg' },
+    { id: 'J_m-N8m8eY8', title: 'Colors Song for Children', category: 'Colors', thumbnail: 'https://i.ytimg.com/vi/J_m-N8m8eY8/mqdefault.jpg' },
+    { id: 'pUPM3en_btY', title: 'The Color Train', category: 'Colors', thumbnail: 'https://i.ytimg.com/vi/pUPM3en_btY/mqdefault.jpg' },
   ]
 };
 

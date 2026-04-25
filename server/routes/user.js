@@ -2,25 +2,25 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const db = require('../db');
+const { verifyToken } = require('../middleware/auth');
 
-// Middleware to protect routes
-const auth = (req, res, next) => {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-    if (!token) return res.status(401).json({ message: 'No token, authorization denied' });
-
+// Get latest magical message
+router.get('/magical-messages', async (req, res) => {
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
-        next();
-    } catch (err) {
-        res.status(401).json({ message: 'Token is not valid' });
+        const [messages] = await db.execute('SELECT * FROM notifications WHERE type = "magical" ORDER BY created_at DESC LIMIT 1');
+        res.json(messages[0] || null);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
-};
+});
+
+// Using central verifyToken middleware instead of local auth
+const auth = verifyToken;
 
 // Get User Profile (Progress + Avatar + Total Points)
 router.get('/profile', auth, async (req, res) => {
     try {
-        const [users] = await db.execute('SELECT username AS name, email FROM users WHERE id = ?', [req.user.id]);
+        const [users] = await db.execute('SELECT username AS name, email, role FROM users WHERE id = ?', [req.user.id]);
         if (users.length === 0) return res.status(404).json({ message: 'User not found' });
         const dbUser = users[0];
 
@@ -52,9 +52,11 @@ router.get('/profile', auth, async (req, res) => {
         `, [req.user.id]);
         
         res.json({
+            id: req.user.id,
             username: dbUser.name,
             displayName: dbUser.name,
             email: dbUser.email,
+            role: dbUser.role,
             avatar: avatar.length > 0 ? avatar[0] : null,
             progress: progress,
             totalPoints: totalPoints[0].points || 0,
@@ -178,6 +180,11 @@ router.get('/modules/:moduleId', auth, async (req, res) => {
             'SELECT * FROM quiz_questions WHERE module_id = ?',
             [req.params.moduleId]
         );
+        res.json({ content, questions });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
 // --- PROFESSIONAL EXTENSIONS ---
 
 // Update Account Settings (Username/Email)
@@ -243,7 +250,46 @@ router.delete('/account', auth, async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
-        res.json({ content, questions });
+// Get assignments for the logged-in student
+router.get('/assignments', auth, async (req, res) => {
+    try {
+        const studentId = parseInt(req.user.id);
+        console.log(`FETCHING ASSIGNMENTS for student ID: ${studentId}`);
+        
+        const [assignments] = await db.query(`
+            SELECT a.*, asub.status, asub.submission_text, asub.completed_at
+            FROM assignments a
+            JOIN assignment_submissions asub ON a.id = asub.assignment_id
+            WHERE asub.student_id = ?
+        `, [studentId]);
+        
+        console.log(`FOUND ${assignments.length} assignments for student ${studentId}`);
+        res.json(assignments);
+    } catch (error) {
+        console.error('FETCH ASSIGNMENTS ERROR:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+// Submit an assignment
+router.post('/assignments/:id/submit', auth, async (req, res) => {
+    const { submission_text } = req.body;
+    try {
+        await db.execute(
+            'UPDATE assignment_submissions SET submission_text = ?, status = "completed", completed_at = CURRENT_TIMESTAMP WHERE assignment_id = ? AND student_id = ?',
+            [submission_text, req.params.id, req.user.id]
+        );
+        res.json({ message: 'Assignment submitted successfully!' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+// Get all notifications for the logged-in student
+router.get('/notifications', auth, async (req, res) => {
+    try {
+        const [notifications] = await db.query('SELECT * FROM notifications ORDER BY created_at DESC LIMIT 30');
+        res.json(notifications);
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }

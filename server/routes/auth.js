@@ -6,7 +6,7 @@ const db = require('../db');
 
 // Signup
 router.post('/signup', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
     try {
         const [existingUser] = await db.execute('SELECT * FROM users WHERE email = ? OR username = ?', [email, username]);
         if (existingUser.length > 0) {
@@ -15,16 +15,16 @@ router.post('/signup', async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const [result] = await db.execute(
-            'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-            [username, email, hashedPassword]
+            'INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)',
+            [username, email, hashedPassword, role || 'student']
         );
 
         const token = jwt.sign(
-            { id: result.insertId, username, email }, 
+            { id: result.insertId, username, email, role: role || 'student' }, 
             process.env.JWT_SECRET, 
             { expiresIn: '7d' }
         );
-        res.status(201).json({ token, user: { id: result.insertId, username, email } });
+        res.status(201).json({ token, user: { id: result.insertId, username, email, role: role || 'student' } });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -46,11 +46,11 @@ router.post('/login', async (req, res) => {
         }
 
         const token = jwt.sign(
-            { id: user.id, username: user.username, email: user.email }, 
+            { id: user.id, username: user.username, email: user.email, role: user.role }, 
             process.env.JWT_SECRET, 
             { expiresIn: '7d' }
         );
-        res.json({ token, user: { id: user.id, username: user.username, email: user.email } });
+        res.json({ token, user: { id: user.id, username: user.username, email: user.email, role: user.role } });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef} from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Settings, Trophy, Star, User, Users, Cog, MoreHorizontal, X 
+  Settings, Trophy, Star, User, Users, Cog, MoreHorizontal, X, BookOpen, Bell
 } from 'lucide-react';
 
 import bgMusic from "./assets/Bright Minds Theme.mp3";
@@ -19,6 +19,7 @@ import WordsGame from "./words_game";
 import ColoringGame from "./Drawing";
 import Login from './Login';
 import Signup from './Signup';
+import TeacherDashboard from './TeacherDashboard';
 
 
 // --- IMAGE IMPORTS ---
@@ -58,7 +59,13 @@ export default function MastiPathshalaApp() {
   
   const [currentUser, setCurrentUser] = useState(() => {
     const savedName = localStorage.getItem('username');
-    return savedName ? { username: savedName } : null;
+    const savedRole = localStorage.getItem('role');
+    const savedToken = localStorage.getItem('token');
+    const savedId = localStorage.getItem('userId');
+    if (savedToken && savedRole) {
+      return { id: savedId, username: savedName || 'Teacher', role: savedRole };
+    }
+    return null;
   });
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [authView, setAuthView] = useState('signup');
@@ -74,13 +81,15 @@ export default function MastiPathshalaApp() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 10000); 
+    }, 2000); 
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     if (token) {
       fetchProfile();
+      fetchAssignments();
+      fetchNotifications();
     }
   }, [token]);
 
@@ -92,8 +101,10 @@ export default function MastiPathshalaApp() {
       const data = await res.json();
       if (res.ok) {
         const theName = data.username || data.displayName || data.name;
-        setCurrentUser({ username: theName, email: data.email });
+        setCurrentUser({ id: data.id, username: theName, email: data.email, role: data.role });
         if (theName) localStorage.setItem('username', theName);
+        if (data.role) localStorage.setItem('role', data.role);
+        if (data.id) localStorage.setItem('userId', data.id);
         const completedIds = data.progress
           .filter(p => p.completed)
           .map(p => p.id);
@@ -114,15 +125,88 @@ export default function MastiPathshalaApp() {
   };
 
   const handleLogin = (data) => {
+    const userWithRole = { 
+      ...data.user, 
+      role: data.user?.role || 'student' 
+    };
     localStorage.setItem('token', data.token);
-    if (data.user?.username) localStorage.setItem('username', data.user.username);
+    if (userWithRole.username) localStorage.setItem('username', userWithRole.username);
+    if (userWithRole.role) localStorage.setItem('role', userWithRole.role);
+    if (userWithRole.id) localStorage.setItem('userId', userWithRole.id);
     setToken(data.token);
-    setCurrentUser(data.user);
+    setCurrentUser(userWithRole);
+  };
+
+  const [assignments, setAssignments] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
+  const [submissionText, setSubmissionText] = useState('');
+  const videoImg = pathImg; 
+
+  const [assignmentError, setAssignmentError] = useState(null);
+  const fetchAssignments = async () => {
+    if (!token) return;
+    setAssignmentError(null);
+    try {
+      const res = await fetch('http://localhost:5000/api/user/assignments', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setAssignments(data);
+      } else {
+        setAssignmentError("Server said: " + res.statusText);
+      }
+    } catch (err) {
+      console.error("Failed to fetch assignments", err);
+      setAssignmentError("Connection failed! Is the server running?");
+    }
+  };
+
+  const fetchNotifications = async () => {
+    if (!token) return;
+    try {
+      const res = await fetch('http://localhost:5000/api/user/notifications', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setNotifications(data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch notifications", err);
+    }
+  };
+
+  const handleAssignmentSubmit = async () => {
+    if (!submissionText.trim() || !selectedAssignment) return;
+    try {
+      const res = await fetch(`http://localhost:5000/api/user/assignments/${selectedAssignment.id}/submit`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ submission_text: submissionText })
+      });
+      if (res.ok) {
+        setIsSubmitModalOpen(false);
+        setSubmissionText('');
+        fetchAssignments();
+        alert("Assignment submitted! Great job! 🌟");
+      }
+    } catch (err) {
+      alert("Failed to submit assignment.");
+    }
   };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    localStorage.removeItem('userId');
     setToken(null);
     setCurrentUser(null);
     setView('hub');
@@ -243,8 +327,8 @@ export default function MastiPathshalaApp() {
     }
   }, [showProfile, profileTab]);
 
-  // --- LOADING PAGE (UPDATED AS PER REQUEST) ---
-  if (isLoading || !startApp) {
+  // --- LOADING PAGE ---
+  if (!startApp && !token) {
     return (
       <div className="min-h-screen w-full bg-[#E3F2FD] flex flex-col items-center justify-center overflow-hidden relative font-sans">
         
@@ -305,7 +389,7 @@ export default function MastiPathshalaApp() {
             whileTap={{ scale: 0.9 }}
             onClick={() => {
               setStartApp(true);
-              setIsLoading(false); // Direct transition
+              setIsLoading(false);
             }}
             className="mt-10 px-10 py-4 bg-orange-500 text-white 
               text-xl font-black rounded-full 
@@ -341,6 +425,11 @@ export default function MastiPathshalaApp() {
     );
   }
 
+  // --- TEACHER REDIRECT ---
+  if (currentUser?.role?.toLowerCase().trim() === 'teacher') {
+    return <TeacherDashboard user={currentUser} onLogout={handleLogout} />;
+  }
+
   // --- AUTH CHECK ---
   if (!token) {
     return authView === 'login' ? (
@@ -374,6 +463,136 @@ export default function MastiPathshalaApp() {
     />
   );
   if (view === 'path') return <MyLearningPaths onBack={() => setView('hub')} />;
+
+  if (view === 'assignments') {
+    return (
+      <div className="min-h-screen w-full bg-[#E3F2FD] p-10 font-sans relative overflow-hidden">
+         {/* Background Elements */}
+         <div className="absolute top-0 right-0 p-20 opacity-10 -rotate-12"><BookOpen size={200} /></div>
+         <div className="absolute bottom-0 left-0 p-20 opacity-10 rotate-12"><Star size={200} /></div>
+
+         <div className="max-w-4xl mx-auto relative z-10">
+            <div className="flex items-center justify-between mb-12">
+               <div>
+                  <h2 className="text-5xl font-black text-[#1A237E] italic tracking-tighter">My Assignments 📚</h2>
+                  <p className="text-gray-500 font-bold mt-2">Finish your tasks and earn more stars! ✨</p>
+               </div>
+               <div className="flex gap-4">
+                 <button 
+                   onClick={fetchAssignments}
+                   className="bg-blue-500 text-white px-6 py-4 rounded-3xl font-black shadow-xl hover:bg-blue-600 transition-all flex items-center gap-2"
+                 >
+                   🔄 Refresh Tasks
+                 </button>
+                 <button 
+                   onClick={() => setView('hub')}
+                   className="bg-white text-blue-600 px-8 py-4 rounded-3xl font-black shadow-xl hover:scale-105 transition-transform"
+                 >
+                   ← Back
+                 </button>
+               </div>
+            </div>
+
+            {assignmentError && (
+              <div className="bg-red-100 text-red-600 p-6 rounded-3xl font-bold mb-6 border-2 border-red-200 animate-pulse">
+                ⚠️ {assignmentError}
+              </div>
+            )}
+
+            <div className="grid gap-6">
+               {assignments.map((a, idx) => (
+                  <motion.div 
+                    key={idx}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="bg-white/80 backdrop-blur-md p-8 rounded-[40px] shadow-lg border-2 border-white flex items-center justify-between group"
+                  >
+                     <div className="flex items-start gap-6">
+                        <div className="w-16 h-16 bg-blue-100 rounded-3xl flex items-center justify-center text-3xl shadow-inner group-hover:bg-blue-200 transition-colors">
+                           {a.category === 'Maths' ? '🔢' : a.category === 'Science' ? '🧪' : '📖'}
+                        </div>
+                        <div>
+                           <div className="flex items-center gap-3 mb-1">
+                              <h3 className="text-2xl font-black text-gray-800 tracking-tight">{a.title}</h3>
+                              <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${a.status === 'completed' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`}>
+                                 {a.status}
+                              </span>
+                           </div>
+                           <p className="text-gray-500 font-bold max-w-lg">{a.description}</p>
+                           <p className="text-xs text-orange-500 font-black uppercase mt-2">Due Date: {new Date(a.due_date).toLocaleDateString()}</p>
+                        </div>
+                     </div>
+                     <button 
+                        disabled={a.status === 'completed'}
+                        onClick={() => {
+                           setSelectedAssignment(a);
+                           setIsSubmitModalOpen(true);
+                        }}
+                        className={`px-8 py-4 rounded-3xl font-black text-sm uppercase tracking-widest shadow-xl transition-all ${a.status === 'completed' ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-orange-500 text-white hover:bg-orange-600 hover:scale-105'}`}
+                     >
+                        {a.status === 'completed' ? 'Done ✓' : 'Do Task'}
+                     </button>
+                  </motion.div>
+               ))}
+               {assignments.length === 0 && (
+                  <div className="text-center py-20 bg-white/50 rounded-[50px] border-4 border-dashed border-white">
+                     <div className="text-6xl mb-4">🌈</div>
+                     <h3 className="text-2xl font-black text-gray-400 italic">No assignments today! Go play some games!</h3>
+                  </div>
+               )}
+            </div>
+         </div>
+
+         {/* SUBMIT MODAL */}
+         <AnimatePresence>
+            {isSubmitModalOpen && (
+               <div className="fixed inset-0 z-[1000] flex items-center justify-center p-6">
+                  <motion.div 
+                    initial={{ opacity: 0 }} 
+                    animate={{ opacity: 1 }} 
+                    exit={{ opacity: 0 }}
+                    onClick={() => setIsSubmitModalOpen(false)}
+                    className="absolute inset-0 bg-black/60 backdrop-blur-md"
+                  />
+                  <motion.div 
+                    initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                    exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                    className="bg-white w-full max-w-lg rounded-[48px] shadow-2xl relative z-10 p-10 overflow-hidden"
+                  >
+                     <h3 className="text-3xl font-black italic text-[#1A237E] mb-2 tracking-tighter">Do Task: {selectedAssignment?.title} ✨</h3>
+                     <p className="text-gray-500 font-bold mb-8">Write your answer below or just say "Finished!"</p>
+                     
+                     <div className="space-y-6">
+                        <textarea 
+                           value={submissionText}
+                           onChange={(e) => setSubmissionText(e.target.value)}
+                           placeholder="Type your magical answer here..."
+                           className="w-full bg-gray-50 border-2 border-gray-100 rounded-3xl p-6 text-gray-800 font-bold placeholder-gray-300 focus:outline-none focus:border-blue-500 h-48 no-scrollbar"
+                        />
+                        <div className="flex gap-4">
+                           <button 
+                              onClick={() => setIsSubmitModalOpen(false)}
+                              className="flex-1 py-4 bg-gray-100 text-gray-500 rounded-3xl font-black uppercase tracking-widest text-sm hover:bg-gray-200 transition-all"
+                           >
+                              Later
+                           </button>
+                           <button 
+                              onClick={handleAssignmentSubmit}
+                              className="flex-2 py-4 bg-blue-600 text-white rounded-3xl font-black uppercase tracking-widest text-sm shadow-xl shadow-blue-600/30 hover:bg-blue-700 transition-all"
+                           >
+                              Submit Answer 🚀
+                           </button>
+                        </div>
+                     </div>
+                  </motion.div>
+               </div>
+            )}
+         </AnimatePresence>
+      </div>
+    );
+  }
 
   if (view === "alpha") {
     return (
@@ -627,9 +846,74 @@ export default function MastiPathshalaApp() {
                </h1>
             </div>
             <div className="flex items-center gap-4">
+                {/* Notifications Button */}
+                <div className="relative">
+                    <div 
+                        className={`w-12 h-12 rounded-2xl flex items-center justify-center text-white cursor-pointer transition-all ${showNotifications ? 'bg-white/40 ring-2 ring-white/50' : 'bg-white/20 backdrop-blur-md hover:bg-white/30'}`}
+                        onClick={() => setShowNotifications(!showNotifications)}
+                    >
+                        <Bell size={24} />
+                        {notifications.length > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+                                {notifications.length}
+                            </span>
+                        )}
+                    </div>
+                    
+                    <AnimatePresence>
+                        {showNotifications && (
+                            <>
+                                <div className="fixed inset-0 z-[90]" onClick={() => setShowNotifications(false)} />
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                    className="absolute top-14 right-0 w-80 bg-white rounded-3xl shadow-2xl p-5 z-[100] border border-gray-100"
+                                >
+                                    <div className="flex items-center justify-between mb-4 px-1">
+                                        <h4 className="text-sm font-black text-gray-800 uppercase tracking-widest">Recent Alerts</h4>
+                                        <button onClick={() => setNotifications([])} className="text-[10px] font-black text-blue-600 hover:underline">CLEAR ALL</button>
+                                    </div>
+                                    <div className="space-y-3 max-h-72 overflow-y-auto no-scrollbar pr-1">
+                                        {notifications.map((n, i) => (
+                                            <div key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex gap-3 group relative">
+                                                <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5 shrink-0" />
+                                                <div>
+                                                    <p className="text-[11px] font-bold text-slate-700 leading-relaxed">{n.message}</p>
+                                                    <p className="text-[9px] font-black text-slate-400 mt-1 uppercase tracking-tighter">Just Now</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {notifications.length === 0 && (
+                                            <div className="text-center py-10">
+                                                <div className="text-4xl mb-2 opacity-20">🔔</div>
+                                                <p className="text-slate-400 text-xs font-bold italic">No new alerts yet!</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </motion.div>
+                            </>
+                        )}
+                    </AnimatePresence>
+                </div>
+
                 <div className="bg-yellow-400 px-6 py-2 rounded-full border-b-2 border-yellow-600 flex items-center gap-2 text-white font-black shadow-md cursor-pointer hover:scale-105 transition-transform" onClick={() => setShowProfile(true)}>
                   <Trophy size={20} /> {totalPoints}
-               </div>
+                </div>
+
+                {/* Assignments Button - Now near Profile */}
+                <div 
+                    className="w-12 h-12 bg-blue-500 rounded-2xl flex items-center justify-center text-white cursor-pointer hover:bg-blue-600 border-b-4 border-blue-700 transition-all relative group"
+                    onClick={() => setView('assignments')}
+                >
+                    <BookOpen size={24} />
+                    {assignments.filter(a => a.status !== 'completed').length > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-[10px] font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-white animate-bounce">
+                            {assignments.filter(a => a.status !== 'completed').length}
+                        </span>
+                    )}
+                </div>
+
                 <button 
                   onClick={() => setShowProfile(true)} 
                   className="p-1 rounded-2xl shadow-lg border-b-2 border-blue-800 bg-blue-600 hover:bg-blue-700 transition-all flex items-center justify-center overflow-hidden"
@@ -664,13 +948,8 @@ export default function MastiPathshalaApp() {
                     <motion.div 
                       key={game.id} 
                       whileHover={{ scale: 1.05, y: -5 }} 
-                      className={`min-w-[240px] bg-white rounded-[35px] p-4 shadow-2xl border-b-8 border-gray-200 relative ${["space", "num", "alpha", "color", "word"].includes(game.id) ? "cursor-pointer" : "opacity-75 cursor-not-allowed"}`}
+                      className="min-w-[240px] bg-white rounded-[35px] p-4 shadow-2xl border-b-8 border-gray-200 relative cursor-pointer"
                       onClick={(e) => {
-                        const functionalGames = ["space", "num", "alpha", "color", "word"];
-                        if (!functionalGames.includes(game.id)) {
-                           e.preventDefault();
-                           return; // Do nothing for unbuilt games
-                        }
                         e.preventDefault();
                         e.stopPropagation();
                         handleGameClick(game.id);
@@ -681,13 +960,6 @@ export default function MastiPathshalaApp() {
                         setView(game.id);
                       }} 
                     >
-                      {!["space", "num", "alpha", "color", "word"].includes(game.id) && (
-                        <div className="absolute inset-0 z-10 bg-white/40 backdrop-blur-[1px] rounded-[35px] flex items-center justify-center">
-                          <div className="bg-gray-800 text-white font-black px-4 py-2 rounded-xl border-2 border-white rotate-[-5deg] shadow-xl">
-                            🚧 COMING SOON
-                          </div>
-                        </div>
-                      )}
                       <div className={`${game.color} rounded-[25px] h-40 mb-4 overflow-hidden relative shadow-inner`}>
                         <img src={game.img} alt={game.title} className="w-full h-full object-cover" />
                         <AnimatePresence>

@@ -11,17 +11,38 @@ const MyLearningPaths = ({ onBack }) => {
   const labels = [
     {
       id: 'reading',
-      title: 'Reading',
-      subtitle: 'Reading practice',
+      title: 'Stories',
+      subtitle: 'Read Along',
       color: 'bg-[#1976D2]',
-      pos: { top: '66%', left: '33.5%' },
+      pos: { top: '75%', left: '25%' },
     },
     {
       id: 'numbers',
       title: 'Numbers',
-      subtitle: 'Maths and counting',
+      subtitle: '1 2 3 Math',
       color: 'bg-[#AB47BC]',
-      pos: { top: '66%', left: '62%' },
+      pos: { top: '75%', left: '75%' },
+    },
+    {
+      id: 'alphabets',
+      title: 'Alphabets',
+      subtitle: 'A B C Songs',
+      color: 'bg-[#FF9800]',
+      pos: { top: '50%', left: '50%' },
+    },
+    {
+      id: 'animals',
+      title: 'Animals',
+      subtitle: 'Zoo & Farm',
+      color: 'bg-[#4CAF50]',
+      pos: { top: '30%', left: '25%' },
+    },
+    {
+      id: 'colors',
+      title: 'Colors',
+      subtitle: 'Paint World',
+      color: 'bg-[#E91E63]',
+      pos: { top: '30%', left: '75%' },
     },
   ];
 
