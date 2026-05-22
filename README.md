@@ -116,6 +116,8 @@ Model predicts the intent
 Chatbot generates response
 Response converts to speech output
 
+---
+
 
 # 📌 Purpose of the Project
 
