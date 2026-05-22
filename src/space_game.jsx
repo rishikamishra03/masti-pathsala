@@ -790,7 +790,6 @@ export default function SpaceGame({ onGameOver }) {
           clearInterval(timerRef.current);
           AudioEngine.gameOver();
           setGameState("gameover");
-          if (onGameOver) onGameOver(score);
           return 0;
         }
         if (t <= 10) AudioEngine.tick(true);
@@ -815,11 +814,16 @@ export default function SpaceGame({ onGameOver }) {
 
   // Game over → check high score
   useEffect(() => {
-    if (gameState === "gameover" && score > highScore) {
-      setHighScore(score);
-      localStorage.setItem("mp_space_hs", score.toString());
+    if (gameState === "gameover") {
+      if (score > highScore) {
+        setHighScore(score);
+        localStorage.setItem("mp_space_hs", score.toString());
+      }
+      if (onGameOver) {
+        onGameOver(score);
+      }
     }
-  }, [gameState, score, highScore]);
+  }, [gameState, score, highScore, onGameOver]);
 
   // Hit handler
   const handleHit = useCallback((letter, x, y) => {

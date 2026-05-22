@@ -235,7 +235,7 @@ function getFirstLetterCells(placements) {
 // ═══════════════════════════════════════════════════════════════
 //  MAIN COMPONENT
 // ═══════════════════════════════════════════════════════════════
-export default function WordsGame() {
+export default function WordsGame({ onGameOver }) {
   const [screen,         setScreen]         = useState("intro");
   const [levelIdx,       setLevelIdx]       = useState(0);
   const [gridData,       setGridData]       = useState(null);
@@ -329,7 +329,13 @@ export default function WordsGame() {
       setFoundWords(newFound);
       setFlash("correct");
       setShowWordBanner(matched);
-      setScore(s => s + matched.length * 10);
+      setScore(s => {
+        const newScore = s + matched.length * 10;
+        if (newFound.size === curLevel.words.length) {
+          if (onGameOver) onGameOver(newScore);
+        }
+        return newScore;
+      });
       spawnParticles();
       setTimeout(() => {
         setFlash(null);

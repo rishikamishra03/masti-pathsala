@@ -5,6 +5,7 @@ import {
   Filter, CheckCircle, Clock, MessageCircle, Send, 
   Star, Trophy, TrendingUp, Calendar, Trash2, X
 } from 'lucide-react';
+import VoiceAssistant from './VoiceAssistant';
 
 export default function TeacherDashboard({ user, onLogout }) {
   const [activeTab, setActiveTab] = useState('overview');
@@ -23,6 +24,28 @@ export default function TeacherDashboard({ user, onLogout }) {
     category: 'Maths',
     due_date: ''
   });
+
+  const handleAssistantAction = (action) => {
+    switch (action) {
+      case 'OPEN_CREATE_ASSIGNMENT':
+        setIsAssignmentModalOpen(true);
+        break;
+      case 'OPEN_MAGICAL_MESSAGE':
+        setIsMessageModalOpen(true);
+        break;
+      case 'VIEW_ANALYTICS':
+        setActiveTab('overview');
+        break;
+      case 'VIEW_STUDENTS':
+        setActiveTab('students');
+        break;
+      case 'ADD_STUDENT':
+        setActiveTab('students');
+        break;
+      default:
+        break;
+    }
+  };
   
   // Stats
   const [stats, setStats] = useState({
@@ -798,6 +821,7 @@ export default function TeacherDashboard({ user, onLogout }) {
           </div>
         )}
       </AnimatePresence>
+      <VoiceAssistant role="teacher" userId={user?.id} onAction={handleAssistantAction} />
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

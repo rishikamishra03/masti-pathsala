@@ -33,7 +33,7 @@ router.get('/activity', verifyTeacher, async (req, res) => {
                 u.username, 
                 lm.title as module_title, 
                 up.score, 
-                up.updated_at as activity_date
+                up.last_played as activity_date
             FROM user_progress up
             JOIN users u ON up.user_id = u.id
             JOIN learning_modules lm ON up.module_id = lm.id)
@@ -179,6 +179,18 @@ router.delete('/notifications/:id', verifyTeacher, async (req, res) => {
         const tId = req.user.id || 0;
         await db.query('DELETE FROM notifications WHERE id = ? AND created_by = ?', [req.params.id, tId]);
         res.json({ message: 'Notification deleted' });
+    } catch (error) {
+        res.status(500).json({ message: `Server error: ${error.message}` });
+    }
+});
+
+// Delete an assignment
+router.delete('/assignments/:id', verifyTeacher, async (req, res) => {
+    try {
+        const tId = req.user.id || 0;
+        await db.query('DELETE FROM assignment_submissions WHERE assignment_id = ?', [req.params.id]);
+        await db.query('DELETE FROM assignments WHERE id = ? AND teacher_id = ?', [req.params.id, tId]);
+        res.json({ message: 'Assignment deleted' });
     } catch (error) {
         res.status(500).json({ message: `Server error: ${error.message}` });
     }

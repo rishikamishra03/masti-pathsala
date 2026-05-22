@@ -1,23 +1,22 @@
-// NumberViewer.jsx
 // Usage: <NumberViewer onNavigateHome={() => {}} />
 
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 
-// ── Data ──────────────────────────────────────────────────────────────────────
+// ── Data
 const NUMBER_WORDS = [
-  "Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten",
-  "Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen","Twenty",
-  "Twenty-One","Twenty-Two","Twenty-Three","Twenty-Four","Twenty-Five","Twenty-Six","Twenty-Seven","Twenty-Eight","Twenty-Nine","Thirty",
-  "Thirty-One","Thirty-Two","Thirty-Three","Thirty-Four","Thirty-Five","Thirty-Six","Thirty-Seven","Thirty-Eight","Thirty-Nine","Forty",
-  "Forty-One","Forty-Two","Forty-Three","Forty-Four","Forty-Five","Forty-Six","Forty-Seven","Forty-Eight","Forty-Nine","Fifty",
-  "Fifty-One","Fifty-Two","Fifty-Three","Fifty-Four","Fifty-Five","Fifty-Six","Fifty-Seven","Fifty-Eight","Fifty-Nine","Sixty",
-  "Sixty-One","Sixty-Two","Sixty-Three","Sixty-Four","Sixty-Five","Sixty-Six","Sixty-Seven","Sixty-Eight","Sixty-Nine","Seventy",
-  "Seventy-One","Seventy-Two","Seventy-Three","Seventy-Four","Seventy-Five","Seventy-Six","Seventy-Seven","Seventy-Eight","Seventy-Nine","Eighty",
-  "Eighty-One","Eighty-Two","Eighty-Three","Eighty-Four","Eighty-Five","Eighty-Six","Eighty-Seven","Eighty-Eight","Eighty-Nine","Ninety",
-  "Ninety-One","Ninety-Two","Ninety-Three","Ninety-Four","Ninety-Five","Ninety-Six","Ninety-Seven","Ninety-Eight","Ninety-Nine","One Hundred",
+  "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+  "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty",
+  "Twenty-One", "Twenty-Two", "Twenty-Three", "Twenty-Four", "Twenty-Five", "Twenty-Six", "Twenty-Seven", "Twenty-Eight", "Twenty-Nine", "Thirty",
+  "Thirty-One", "Thirty-Two", "Thirty-Three", "Thirty-Four", "Thirty-Five", "Thirty-Six", "Thirty-Seven", "Thirty-Eight", "Thirty-Nine", "Forty",
+  "Forty-One", "Forty-Two", "Forty-Three", "Forty-Four", "Forty-Five", "Forty-Six", "Forty-Seven", "Forty-Eight", "Forty-Nine", "Fifty",
+  "Fifty-One", "Fifty-Two", "Fifty-Three", "Fifty-Four", "Fifty-Five", "Fifty-Six", "Fifty-Seven", "Fifty-Eight", "Fifty-Nine", "Sixty",
+  "Sixty-One", "Sixty-Two", "Sixty-Three", "Sixty-Four", "Sixty-Five", "Sixty-Six", "Sixty-Seven", "Sixty-Eight", "Sixty-Nine", "Seventy",
+  "Seventy-One", "Seventy-Two", "Seventy-Three", "Seventy-Four", "Seventy-Five", "Seventy-Six", "Seventy-Seven", "Seventy-Eight", "Seventy-Nine", "Eighty",
+  "Eighty-One", "Eighty-Two", "Eighty-Three", "Eighty-Four", "Eighty-Five", "Eighty-Six", "Eighty-Seven", "Eighty-Eight", "Eighty-Nine", "Ninety",
+  "Ninety-One", "Ninety-Two", "Ninety-Three", "Ninety-Four", "Ninety-Five", "Ninety-Six", "Ninety-Seven", "Ninety-Eight", "Ninety-Nine", "One Hundred",
 ];
-const NUM_COLORS = ["#ef4444","#3b82f6","#22c55e","#eab308","#a855f7","#f97316","#ec4899","#6366f1","#14b8a6","#f43f5e"];
+const NUM_COLORS = ["#ef4444", "#3b82f6", "#22c55e", "#eab308", "#a855f7", "#f97316", "#ec4899", "#6366f1", "#14b8a6", "#f43f5e"];
 
 const NUMBERS = Array.from({ length: 100 }, (_, i) => ({
   value: i + 1,
@@ -28,9 +27,9 @@ const NUMBERS = Array.from({ length: 100 }, (_, i) => ({
 // Component to visualize numbers as dots (tens and ones concept)
 const NumberVisualizer = ({ count, color }) => {
   return (
-    <div className="flex flex-wrap justify-center gap-1.5 max-w-[280px] md:max-w-[360px] mx-auto p-4 bg-white/10 rounded-2xl border-2 border-white/20 shadow-inner">
+    <div className="flex flex-wrap justify-center gap-2 w-full max-w-[500px] mx-auto p-4 bg-white/10 rounded-2xl border-2 border-white/20 shadow-inner overflow-y-auto h-[250px] md:h-[320px]">
       {Array.from({ length: count }).map((_, i) => (
-        <motion.div 
+        <motion.div
           key={i}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -49,10 +48,10 @@ export default function NumberViewer({ onNavigateHome, onComplete }) {
 
   const current = NUMBERS[currentIndex];
   const ranges = [
-    { label: "1-10",   start: 0  },
-    { label: "11-20",  start: 10 },
-    { label: "21-30",  start: 20 },
-    { label: "51-60",  start: 50 },
+    { label: "1-10", start: 0 },
+    { label: "11-20", start: 10 },
+    { label: "21-30", start: 20 },
+    { label: "51-60", start: 50 },
     { label: "91-100", start: 90 },
   ];
 
@@ -69,7 +68,7 @@ export default function NumberViewer({ onNavigateHome, onComplete }) {
     if (currentIndex < NUMBERS.length - 1) {
       const ni = currentIndex + 1;
       setCurrentIndex(ni); playSound(NUMBERS[ni]);
-      
+
       // If it's the last number (100), report completion
       if (ni === NUMBERS.length - 1 && onComplete) {
         onComplete(100);
@@ -108,7 +107,7 @@ export default function NumberViewer({ onNavigateHome, onComplete }) {
 
   return (
     <div className="fixed inset-0 z-[300] bg-[#f0f9ff] bg-[radial-gradient(#38bdf8_2px,transparent_2px),radial-gradient(#38bdf8_1px,transparent_1px)] bg-[size:60px_60px,30px_30px] bg-[position:0_0,30px_30px] flex flex-col items-center p-4 font-sans overflow-hidden">
-      
+
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <motion.span animate={{ y: [0, -20, 0], rotate: [-5, 5, -5] }} transition={{ repeat: Infinity, duration: 5 }} className="absolute top-10 left-[5%] text-5xl opacity-40">🔢</motion.span>
@@ -119,7 +118,7 @@ export default function NumberViewer({ onNavigateHome, onComplete }) {
 
       {/* Main frame */}
       <div className="relative w-full max-w-5xl bg-white/50 backdrop-blur-xl rounded-[3rem] p-6 shadow-2xl border-[12px] border-[#7dd3fc] flex flex-col flex-1 z-10">
-        
+
         {/* Top bar */}
         <div className="flex items-center justify-between mb-6 z-30 flex-wrap gap-3">
           <button onClick={onNavigateHome} className="bg-red-500 hover:bg-red-600 text-white rounded-2xl p-4 text-3xl shadow-[0_8px_0_0_#b91c1c] active:shadow-none active:translate-y-2 transition-all">
@@ -143,10 +142,10 @@ export default function NumberViewer({ onNavigateHome, onComplete }) {
 
         {/* Content */}
         <div className="flex flex-1 flex-row items-center justify-center gap-10 relative z-10 flex-wrap">
-          
+
           {/* Enhanced Teacher */}
           <div className="flex flex-col items-center justify-end flex-none">
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.05 }}
               animate={isTeaching ? { y: [0, -15, 0] } : {}}
               transition={{ duration: 0.5, repeat: isTeaching ? 3 : 0 }}
@@ -157,17 +156,17 @@ export default function NumberViewer({ onNavigateHome, onComplete }) {
                 {/* Robot Teacher for numbers */}
                 <span className="relative z-10 drop-shadow-xl group-hover:scale-110 transition-transform duration-300">🤖</span>
                 <div className="absolute bottom-4 w-full flex justify-center gap-4 opacity-70">
-                   <div className="w-6 h-3 bg-sky-400 rounded-full"></div>
+                  <div className="w-6 h-3 bg-sky-400 rounded-full"></div>
                 </div>
                 {isTeaching && (
                   <motion.div animate={{ scale: [1, 1.3, 1], rotate: [0, 180, 360] }} transition={{ repeat: Infinity, duration: 1 }} className="absolute -top-2 -right-2 text-4xl">⚙️</motion.div>
                 )}
               </div>
-              
+
               {/* Speech Bubble */}
               <AnimatePresence>
                 {isTeaching && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, scale: 0.5, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.5 }}
@@ -186,7 +185,7 @@ export default function NumberViewer({ onNavigateHome, onComplete }) {
 
           {/* Chalkboard / Display Area */}
           <div className="flex-1 flex items-center justify-center max-w-2xl">
-            <motion.div 
+            <motion.div
               key={currentIndex}
               initial={{ opacity: 0, scale: 0.8, rotateX: -20 }}
               animate={{ opacity: 1, scale: 1, rotateX: 0 }}
@@ -199,17 +198,17 @@ export default function NumberViewer({ onNavigateHome, onComplete }) {
 
               {/* Number Visualizer (Dots/Stars) */}
               <div className="w-full h-32 md:h-40 flex items-center justify-center overflow-y-auto custom-scrollbar pt-4">
-                 <NumberVisualizer count={current.value} color={current.color} />
+                <NumberVisualizer count={current.value} color={current.color} />
               </div>
 
               {/* Huge Number */}
-              <motion.span 
+              <motion.span
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.1 }}
                 className="text-[6rem] md:text-[9rem] font-black leading-none drop-shadow-2xl z-10"
-                style={{ 
-                  color: "white", 
+                style={{
+                  color: "white",
                   fontFamily: "'Chalkboard SE', cursive",
                   textShadow: `4px 4px 0px ${current.color}80, 0 0 30px ${current.color}AA`
                 }}
@@ -218,7 +217,7 @@ export default function NumberViewer({ onNavigateHome, onComplete }) {
               </motion.span>
 
               {/* Word */}
-              <motion.div 
+              <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring" }}
@@ -233,7 +232,7 @@ export default function NumberViewer({ onNavigateHome, onComplete }) {
         </div>
 
         {/* Bottom nav */}
-        <div className="flex items-center justify-between mt-8 z-30 gap-4 flex-wrap">
+        <div className="fixed bottom-4 left-0 right-0 flex justify-between items-center px-10 z-50">
           <button onClick={prev} disabled={currentIndex === 0}
             className="flex items-center gap-3 px-8 py-4 rounded-full font-black text-xl uppercase tracking-wider border-[4px] border-[#e0f2fe] bg-white text-sky-700 shadow-[0_8px_15px_rgba(0,0,0,0.1)] hover:-translate-y-1 hover:shadow-xl disabled:opacity-40 disabled:hover:translate-y-0 transition-all">
             <span className="text-3xl">⬅️</span><span>Back</span>

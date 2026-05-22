@@ -6,32 +6,32 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const ALPHABETS = [
-  { letter: "A", word: "Apple",     emoji: "🍎", color: "#ef4444" },
-  { letter: "B", word: "Ball",      emoji: "⚽", color: "#3b82f6" },
-  { letter: "C", word: "Cat",       emoji: "🐱", color: "#fb923c" },
-  { letter: "D", word: "Dog",       emoji: "🐶", color: "#ca8a04" },
-  { letter: "E", word: "Elephant",  emoji: "🐘", color: "#9ca3af" },
-  { letter: "F", word: "Fish",      emoji: "🐟", color: "#93c5fd" },
-  { letter: "G", word: "Grapes",    emoji: "🍇", color: "#a855f7" },
-  { letter: "H", word: "Horse",     emoji: "🐎", color: "#92400e" },
+  { letter: "A", word: "Apple", emoji: "🍎", color: "#ef4444" },
+  { letter: "B", word: "Ball", emoji: "⚽", color: "#3b82f6" },
+  { letter: "C", word: "Cat", emoji: "🐱", color: "#fb923c" },
+  { letter: "D", word: "Dog", emoji: "🐶", color: "#ca8a04" },
+  { letter: "E", word: "Elephant", emoji: "🐘", color: "#9ca3af" },
+  { letter: "F", word: "Fish", emoji: "🐟", color: "#93c5fd" },
+  { letter: "G", word: "Grapes", emoji: "🍇", color: "#a855f7" },
+  { letter: "H", word: "Horse", emoji: "🐎", color: "#92400e" },
   { letter: "I", word: "Ice Cream", emoji: "🍦", color: "#f9a8d4" },
   { letter: "J", word: "Jellyfish", emoji: "🪼", color: "#c084fc" },
-  { letter: "K", word: "Kangaroo",  emoji: "🦘", color: "#ea580c" },
-  { letter: "L", word: "Lion",      emoji: "🦁", color: "#eab308" },
-  { letter: "M", word: "Monkey",    emoji: "🐒", color: "#b45309" },
-  { letter: "N", word: "Nose",      emoji: "👃", color: "#fce7f3" },
-  { letter: "O", word: "Orange",    emoji: "🍊", color: "#f97316" },
-  { letter: "P", word: "Panda",     emoji: "🐼", color: "#1e293b" },
-  { letter: "Q", word: "Queen",     emoji: "👸", color: "#a16207" },
-  { letter: "R", word: "Rabbit",    emoji: "🐰", color: "#64748b" },
-  { letter: "S", word: "Sun",       emoji: "☀️", color: "#facc15" },
-  { letter: "T", word: "Tiger",     emoji: "🐯", color: "#f97316" },
-  { letter: "U", word: "Umbrella",  emoji: "☂️", color: "#c084fc" },
-  { letter: "V", word: "Violin",    emoji: "🎻", color: "#991b1b" },
-  { letter: "W", word: "Whale",     emoji: "🐋", color: "#60a5fa" },
+  { letter: "K", word: "Kangaroo", emoji: "🦘", color: "#ea580c" },
+  { letter: "L", word: "Lion", emoji: "🦁", color: "#eab308" },
+  { letter: "M", word: "Monkey", emoji: "🐒", color: "#b45309" },
+  { letter: "N", word: "Nose", emoji: "👃", color: "#fce7f3" },
+  { letter: "O", word: "Orange", emoji: "🍊", color: "#f97316" },
+  { letter: "P", word: "Panda", emoji: "🐼", color: "#1e293b" },
+  { letter: "Q", word: "Queen", emoji: "👸", color: "#a16207" },
+  { letter: "R", word: "Rabbit", emoji: "🐰", color: "#64748b" },
+  { letter: "S", word: "Sun", emoji: "☀️", color: "#facc15" },
+  { letter: "T", word: "Tiger", emoji: "🐯", color: "#f97316" },
+  { letter: "U", word: "Umbrella", emoji: "☂️", color: "#c084fc" },
+  { letter: "V", word: "Violin", emoji: "🎻", color: "#991b1b" },
+  { letter: "W", word: "Whale", emoji: "🐋", color: "#60a5fa" },
   { letter: "X", word: "Xylophone", emoji: "🎹", color: "#2dd4bf" },
-  { letter: "Y", word: "Yo-yo",     emoji: "🪀", color: "#4ade80" },
-  { letter: "Z", word: "Zebra",     emoji: "🦓", color: "#334155" },
+  { letter: "Y", word: "Yo-yo", emoji: "🪀", color: "#4ade80" },
+  { letter: "Z", word: "Zebra", emoji: "🦓", color: "#334155" },
 ];
 
 export default function AlphabetViewer({ onNavigateHome, onComplete }) {
@@ -53,7 +53,7 @@ export default function AlphabetViewer({ onNavigateHome, onComplete }) {
     if (currentIndex < ALPHABETS.length - 1) {
       const ni = currentIndex + 1;
       setCurrentIndex(ni); playSound(ALPHABETS[ni]);
-      
+
       // If it's the last letter, report completion
       if (ni === ALPHABETS.length - 1 && onComplete) {
         onComplete(100); // 100 points for finishing ABCs
@@ -84,8 +84,8 @@ export default function AlphabetViewer({ onNavigateHome, onComplete }) {
   const progressPct = ((currentIndex + 1) / ALPHABETS.length) * 100;
 
   return (
-    <div className="fixed inset-0 z-[300] bg-[#fff0f6] bg-[radial-gradient(#f472b6_2px,transparent_2px),radial-gradient(#f472b6_1px,transparent_1px)] bg-[size:60px_60px,30px_30px] bg-[position:0_0,30px_30px] flex flex-col items-center p-4 font-sans overflow-hidden">
-      
+    <div className="fixed inset-0 z-[300] bg-[#fff0f6] bg-[radial-gradient(#f472b6_2px,transparent_2px),radial-gradient(#f472b6_1px,transparent_1px)] bg-[size:60px_60px,30px_30px] bg-[position:0_0,30px_30px] flex flex-col items-center p-4 font-sans overflow-y-auto">
+
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <motion.span animate={{ y: [0, -20, 0], rotate: [-5, 5, -5] }} transition={{ repeat: Infinity, duration: 5 }} className="absolute top-10 left-[5%] text-5xl opacity-40">🔤</motion.span>
@@ -96,7 +96,7 @@ export default function AlphabetViewer({ onNavigateHome, onComplete }) {
 
       {/* Main frame */}
       <div className="relative w-full max-w-5xl bg-white/50 backdrop-blur-xl rounded-[3rem] p-6 shadow-2xl border-[12px] border-[#f9a8d4] flex flex-col flex-1 z-10">
-        
+
         {/* Top bar */}
         <div className="flex items-center justify-between mb-6 z-30 flex-wrap gap-3">
           <button onClick={onNavigateHome} className="bg-red-500 hover:bg-red-600 text-white rounded-2xl p-4 text-3xl shadow-[0_8px_0_0_#b91c1c] active:shadow-none active:translate-y-2 transition-all">
@@ -108,7 +108,7 @@ export default function AlphabetViewer({ onNavigateHome, onComplete }) {
           </motion.div>
 
           <div className="flex gap-2 flex-wrap max-w-[200px] justify-end">
-            {["A","F","K","P","U","Z"].map(l => (
+            {["A", "F", "K", "P", "U", "Z"].map(l => (
               <button key={l}
                 onClick={() => { const i = ALPHABETS.findIndex(a => a.letter === l); setCurrentIndex(i); playSound(ALPHABETS[i]); }}
                 className={`w-10 h-10 rounded-full font-black text-sm border-2 border-[#f9a8d4] transition-all ${current.letter === l ? 'bg-pink-500 text-white scale-110 shadow-lg' : 'bg-white text-pink-900 hover:bg-pink-100'}`}>
@@ -120,10 +120,10 @@ export default function AlphabetViewer({ onNavigateHome, onComplete }) {
 
         {/* Content */}
         <div className="flex flex-1 flex-row items-center justify-center gap-10 relative z-10 flex-wrap">
-          
+
           {/* Enhanced Teacher */}
           <div className="flex flex-col items-center justify-end flex-none">
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.05 }}
               animate={isTeaching ? { y: [0, -15, 0] } : {}}
               transition={{ duration: 0.5, repeat: isTeaching ? 3 : 0 }}
@@ -134,18 +134,18 @@ export default function AlphabetViewer({ onNavigateHome, onComplete }) {
                 {/* Cute Animated Owl Teacher instead of basic emoji */}
                 <span className="relative z-10 drop-shadow-xl group-hover:rotate-12 transition-transform duration-300">🦉</span>
                 <div className="absolute bottom-4 w-full flex justify-center gap-4 opacity-70">
-                   <div className="w-4 h-4 bg-pink-400 rounded-full"></div>
-                   <div className="w-4 h-4 bg-pink-400 rounded-full"></div>
+                  <div className="w-4 h-4 bg-pink-400 rounded-full"></div>
+                  <div className="w-4 h-4 bg-pink-400 rounded-full"></div>
                 </div>
                 {isTeaching && (
                   <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity }} className="absolute -top-2 -right-2 text-4xl">✨</motion.div>
                 )}
               </div>
-              
+
               {/* Speech Bubble */}
               <AnimatePresence>
                 {isTeaching && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, scale: 0.5, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.5 }}
@@ -164,7 +164,7 @@ export default function AlphabetViewer({ onNavigateHome, onComplete }) {
 
           {/* Chalkboard / Display Area */}
           <div className="flex-1 flex items-center justify-center max-w-2xl">
-            <motion.div 
+            <motion.div
               key={currentIndex}
               initial={{ opacity: 0, scale: 0.8, rotateX: -20 }}
               animate={{ opacity: 1, scale: 1, rotateX: 0 }}
@@ -176,7 +176,7 @@ export default function AlphabetViewer({ onNavigateHome, onComplete }) {
               <div className="absolute -bottom-4 left-10 right-10 h-6 bg-[#3e1702] rounded-full shadow-[0_-5px_15px_rgba(0,0,0,0.3)]"></div>
 
               <div className="relative z-10 flex flex-col items-center">
-                <motion.div 
+                <motion.div
                   initial={{ rotate: -180, scale: 0 }}
                   animate={{ rotate: 12, scale: 1 }}
                   transition={{ type: "spring", bounce: 0.6, delay: 0.1 }}
@@ -186,13 +186,13 @@ export default function AlphabetViewer({ onNavigateHome, onComplete }) {
                   <span className="drop-shadow-lg">{current.emoji}</span>
                 </motion.div>
 
-                <motion.span 
+                <motion.span
                   initial={{ y: 50, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
                   className="text-[8rem] md:text-[11rem] font-black leading-none drop-shadow-2xl"
-                  style={{ 
-                    color: "white", 
+                  style={{
+                    color: "white",
                     fontFamily: "'Chalkboard SE', cursive",
                     textShadow: "4px 4px 0px rgba(255,255,255,0.2), 0 0 20px rgba(255,255,255,0.4)"
                   }}
@@ -200,7 +200,7 @@ export default function AlphabetViewer({ onNavigateHome, onComplete }) {
                   {current.letter}
                 </motion.span>
 
-                <motion.div 
+                <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.3, type: "spring" }}

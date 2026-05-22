@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
 // --- BACKGROUND IMAGE IMPORT ---
-import bgImage from './bg.jpeg'; 
+import bgImage from './bg.jpeg';
 import Avatar from './Avatar';
 import Safari from './Safari';
 import Aquarium from './Aquarium';
@@ -11,91 +11,79 @@ import HamsterLogic from './HamsterLogic';
 
 const ExploreScene = ({ onBack, onAvatarSave }) => {
   const [activeApp, setActiveApp] = React.useState(null);
-  
+
   // --- COORDINATES (Labels shifted slightly up) ---
   const labels = [
-    {
-      id: 'bot_beats',
-      title: 'Bot Beats',
-      subtitle: 'Coding',
-      color: 'bg-[#B71C1C]', 
-      pos: { top: '72%', left: '11%' },
-    },
+
     {
       id: 'aquarium',
       title: 'Aquarium',
       subtitle: 'Social-Emotional Learning',
-      color: 'bg-[#0D47A1]', 
-      pos: { top: '61%', left: '35.5%' },
+      color: 'bg-[#0D47A1]',
+      pos: { top: '55%', left: '35.5%' },
     },
     {
       id: 'hamster',
       title: 'Hamster',
       subtitle: 'Spatial Logic',
-      color: 'bg-[#880E4F]', 
-      pos: { top: '41%', left: '66%' },
+      color: 'bg-[#880E4F]',
+      pos: { top: '33%', left: '66%' },
     },
     {
       id: 'safari',
       title: 'Safari',
       subtitle: 'Life Science',
-      color: 'bg-[#1B5E20]', 
-      pos: { top: '35%', left: '15%' },
+      color: 'bg-[#1B5E20]',
+      pos: { top: '90%', left: '40%' },
     },
     {
       id: 'avatar',
       title: 'Avatar',
       subtitle: 'Customize You',
-      color: 'bg-[#E65100]', 
-      pos: { top: '49%', left: '46%' },
-    },
-    {
-      id: 'pet_town',
-      title: 'Pet Town',
-      subtitle: 'Narrative Play',
-      color: 'bg-[#311B92]', 
-      pos: { top: '85%', left: '89%' },
-    },
+      color: 'bg-[#E65100]',
+      pos: { top: '90%', left: '57%' },
+    }
+
   ];
 
   if (activeApp === 'safari') return <Safari onBack={() => setActiveApp(null)} />;
   if (activeApp === 'aquarium') return <Aquarium onBack={() => setActiveApp(null)} />;
   if (activeApp === 'hamster') return <HamsterLogic onBack={() => setActiveApp(null)} />;
   if (activeApp === 'avatar') return (
-    <Avatar 
+    <Avatar
       onBack={() => {
         setActiveApp(null);
         if (onAvatarSave) onAvatarSave();
-      }} 
+      }}
     />
   );
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden font-sans">
-      
+
       {/* 1. BACKGROUND IMAGE WITH WAVY/BREATHING EFFECT */}
-      <motion.div 
-        animate={{ 
+      <motion.div
+        animate={{
           scale: [1, 1.02, 1],
-          rotate: [0, 0.5, -0.5, 0] 
+          rotate: [0, 0.5, -0.5, 0]
         }}
-        transition={{ 
-          duration: 8, 
-          repeat: Infinity, 
-          ease: "easeInOut" 
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
         }}
         className="absolute inset-0 z-0"
       >
-        <img 
-          src={bgImage} 
-          alt="Playroom" 
-          className="w-full h-full object-cover" 
+        <img
+          src={bgImage}
+          alt="Playroom"
+          className="w-full h-full object-cover"
         />
       </motion.div>
 
       {/* 2. TOP UI (Exit & Tickets) */}
       <div className="relative z-[100] w-full p-8 flex items-center justify-between pointer-events-none">
-        <motion.button 
+        <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={onBack}
@@ -104,7 +92,7 @@ const ExploreScene = ({ onBack, onAvatarSave }) => {
           <X size={35} className="text-white" strokeWidth={5} />
         </motion.button>
 
-        <motion.div 
+        <motion.div
           animate={{ y: [0, -5, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
           className="flex items-center gap-3 bg-white/90 px-6 py-2 rounded-2xl shadow-lg border-2 border-yellow-200 pointer-events-auto"
@@ -117,14 +105,14 @@ const ExploreScene = ({ onBack, onAvatarSave }) => {
       {/* 3. FLOATING LABELS */}
       <div className="absolute inset-0 z-50 pointer-events-none">
         {labels.map((item, index) => (
-          <motion.div 
+          <motion.div
             key={item.id}
             initial={{ opacity: 0, y: 20 }}
-            animate={{ 
-              opacity: 1, 
+            animate={{
+              opacity: 1,
               y: [0, -8, 0], // Floating up and down
             }}
-            transition={{ 
+            transition={{
               y: {
                 duration: 2.5,
                 repeat: Infinity,
@@ -137,7 +125,7 @@ const ExploreScene = ({ onBack, onAvatarSave }) => {
             style={{ top: item.pos.top, left: item.pos.left }}
           >
             {/* The Label Box */}
-            <div 
+            <div
               onClick={() => {
                 if (item.id === 'avatar') setActiveApp('avatar');
                 if (item.id === 'safari') setActiveApp('safari');

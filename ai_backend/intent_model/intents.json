@@ -1,0 +1,384 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "hello",
+        "hi",
+        "namaste",
+        "koi hai",
+        "hello assistant",
+        "good morning"
+      ],
+      "responses": [
+        "Hello! Kaise ho aap?",
+        "Namaste! Main aapki Masti-Pathshala assistant hoon.",
+        "Hi there! How can I help you today?"
+      ],
+      "role": "student"
+    },
+    {
+      "tag": "how_are_you",
+      "patterns": [
+        "how are you",
+        "tum kaise ho",
+        "kya haal hai",
+        "are you fine"
+      ],
+      "responses": [
+        "Main bilkul theek hoon! Aap kya sikhna chahte ho aaj?",
+        "I am perfectly fine! Ready for some fun learning?"
+      ],
+      "role": "student"
+    },
+    {
+      "tag": "open_classroom",
+      "patterns": [
+        "take me to classroom",
+        "meri class kahan hai",
+        "meri class kaha hai",
+        "class kaha hai",
+        "open classroom",
+        "mujhe class jana hai",
+        "classroom open karo"
+      ],
+      "responses": [
+        "Chalo class chalte hain!",
+        "Opening your classroom. Happy learning!"
+      ],
+      "action": "NAVIGATE_CLASSROOM",
+      "role": "student"
+    },
+    {
+      "tag": "open_explore",
+      "patterns": [
+        "duniya explore karni hai",
+        "explore world open karo",
+        "mujhe explore karna hai",
+        "take me to explore world"
+      ],
+      "responses": [
+        "Duniya ghumne ka time! Explore World khul raha hai.",
+        "Let's explore the world together!"
+      ],
+      "action": "NAVIGATE_EXPLORE",
+      "role": "student"
+    },
+    {
+      "tag": "open_learning_path",
+      "patterns": [
+        "learning path dikhao",
+        "mera rasta kahan hai",
+        "open learning path",
+        "mera learning path open karo"
+      ],
+      "responses": [
+        "Ye raha aapka learning path! Dekho aap kitna aage badh gaye.",
+        "Opening your Learning Path!"
+      ],
+      "action": "NAVIGATE_PATH",
+      "role": "student"
+    },
+    {
+      "tag": "open_assignments",
+      "patterns": [
+        "mera homework kya hai",
+        "assignments dikhao",
+        "open assignments",
+        "aaj ka task kya hai",
+        "pending homework"
+      ],
+      "responses": [
+        "Aapke assignments check karte hain! Opening assignments page.",
+        "Here are your tasks for today!"
+      ],
+      "action": "NAVIGATE_ASSIGNMENTS",
+      "role": "student"
+    },
+    {
+      "tag": "open_alphabet",
+      "patterns": [
+        "abc sikhao",
+        "alphabet game kholo",
+        "learn letters",
+        "mujhe abc sikhna hai",
+        "alphabet learning start karo"
+      ],
+      "responses": [
+        "Chalo ABC sikte hain!",
+        "Alphabet section open ho raha hai!"
+      ],
+      "action": "NAVIGATE_ALPHABET",
+      "role": "student"
+    },
+    {
+      "tag": "open_color",
+      "patterns": [
+        "color game khelna hai",
+        "colors sikhne hain",
+        "open color game",
+        "mujhe drawing me color karna hai",
+        "rang sikhne hai"
+      ],
+      "responses": [
+        "Colors ke saath masti karte hain! Opening Color game.",
+        "Chalo nayi duniya rangte hain!"
+      ],
+      "action": "NAVIGATE_COLOR",
+      "role": "student"
+    },
+    {
+      "tag": "open_word",
+      "patterns": [
+        "words sikhne hain",
+        "word game open karo",
+        "spelling game",
+        "naya word sikhna hai",
+        "open word game"
+      ],
+      "responses": [
+        "Words sikhna bahut majedar hai! Opening Word game.",
+        "Let's learn new words today!"
+      ],
+      "action": "NAVIGATE_WORD",
+      "role": "student"
+    },
+    {
+      "tag": "open_space_game",
+      "patterns": [
+        "space game kaise open karna hai",
+        "mujhe space game khelna hai",
+        "open space game",
+        "space game kholo",
+        "i want to play space game"
+      ],
+      "responses": [
+        "Zaroor! Main space game open kar rahi hoon. Best of luck!",
+        "Space game open ho raha hai! Have fun in space!"
+      ],
+      "action": "NAVIGATE_SPACE",
+      "role": "student"
+    },
+    {
+      "tag": "open_draw",
+      "patterns": [
+        "drawing karni hai",
+        "paint karna hai",
+        "open drawing board",
+        "mujhe draw karna hai",
+        "sketching karni hai"
+      ],
+      "responses": [
+        "Wow artist! Drawing board open kar rahi hoon!",
+        "Chalo kuch creative banate hain!"
+      ],
+      "action": "NAVIGATE_DRAW",
+      "role": "student"
+    },
+    {
+      "tag": "open_number_game",
+      "patterns": [
+        "mujhe number game khelna hai",
+        "mughe number game khelna hai",
+        "open number game",
+        "number game start karo",
+        "maths game",
+        "number game",
+        "123 sikhao"
+      ],
+      "responses": [
+        "Okay! Number game start ho raha hai. Let's count!",
+        "Opening Number game. Math ke saath khelo aur sikho!"
+      ],
+      "action": "NAVIGATE_NUM",
+      "role": "student"
+    },
+    {
+      "tag": "open_poem_section",
+      "patterns": [
+        "mujhe poem sunna hai",
+        "mughe poem sunna hai",
+        "poem dikhao",
+        "open poem",
+        "i want to read a poem",
+        "poem start karo",
+        "rhymes sunao",
+        "kavita sunao"
+      ],
+      "responses": [
+        "Zaroor! Main poem section open kar rahi hoon. Let's learn poems!",
+        "Poem section khul raha hai. Enjoy the rhymes!"
+      ],
+      "action": "NAVIGATE_POEM",
+      "role": "student"
+    },
+    {
+      "tag": "how_to_play_alphabet",
+      "patterns": [
+        "how to play alphabet game",
+        "alphabet game kaise khelte hain",
+        "alphabet game rule kya hai",
+        "alphabet sikhna hai"
+      ],
+      "responses": [
+        "Alphabet game mein aapko sahi letters ko pehchanna hai. Screen par jo letter dikhe, uspe click karo! It's very easy and fun!"
+      ],
+      "role": "student"
+    },
+    {
+      "tag": "check_score_student",
+      "patterns": [
+        "mera score kya hai",
+        "what is my score",
+        "mere points kitne hain",
+        "how many points do i have",
+        "score dikhao",
+        "kitne stars mile"
+      ],
+      "responses": [
+        "Aapka score check kar rahi hoon... Aapka total score hai: {score}."
+      ],
+      "action": "FETCH_STUDENT_SCORE",
+      "role": "student"
+    },
+    {
+      "tag": "motivation",
+      "patterns": [
+        "how to stay motivated",
+        "mujhe padhne ka man nahi kar raha",
+        "i feel bored",
+        "mujhe padhai nahi karni",
+        "study me man nahi lag raha",
+        "bore ho raha hu"
+      ],
+      "responses": [
+        "Padhai boring nahi hoti agar aap games ke saath sikho! Masti-Pathshala mein chhote-chhote games khelo, thoda break lo, aur phir dekho kitna maza aayega!",
+        "Don't worry! Thodi der coloring game khel lo, fresh feel karoge, phir padhna start karna!"
+      ],
+      "role": "student"
+    },
+    {
+      "tag": "teacher_greeting",
+      "patterns": [
+        "hello teacher assistant",
+        "hi teacher",
+        "good morning teacher assistant",
+        "start teacher assistant",
+        "teacher mode start karo"
+      ],
+      "responses": [
+        "Hello Teacher! How can I assist you in your classroom today?",
+        "Good day! I am ready to help you manage the class."
+      ],
+      "role": "teacher"
+    },
+    {
+      "tag": "create_assignment",
+      "patterns": [
+        "create a new assignment",
+        "ek naya assignment banao",
+        "assignment create karo",
+        "give homework to students",
+        "new task assign karo"
+      ],
+      "responses": [
+        "Sure, please tell me the title and topic of the assignment, and I'll create it for you.",
+        "I am opening the assignment creation menu for you right now."
+      ],
+      "action": "OPEN_CREATE_ASSIGNMENT",
+      "role": "teacher"
+    },
+    {
+      "tag": "check_lowest_score",
+      "patterns": [
+        "kaun se student ka score sabse kam hai",
+        "who has the lowest score",
+        "sabse kam marks kiske hain",
+        "weakest student kaun hai",
+        "kise extra help chahiye"
+      ],
+      "responses": [
+        "Let me check the database... Student '{student_name}' has the lowest score right now with {score} points. They might need a little extra attention."
+      ],
+      "action": "FETCH_LOWEST_SCORE",
+      "role": "teacher"
+    },
+    {
+      "tag": "check_highest_score",
+      "patterns": [
+        "sabse jyada score kiska hai",
+        "who has the highest score",
+        "top student kaun hai",
+        "class topper",
+        "best performer kaun hai"
+      ],
+      "responses": [
+        "Checking the leaderboard... The top student is '{student_name}' with a fantastic score of {score} points!"
+      ],
+      "action": "FETCH_HIGHEST_SCORE",
+      "role": "teacher"
+    },
+    {
+      "tag": "teaching_suggestions",
+      "patterns": [
+        "how to improve the marks of students",
+        "teaching skills suggestions",
+        "students ke marks kaise badhayein",
+        "kids are not focusing",
+        "bache padh nahi rahe"
+      ],
+      "responses": [
+        "To improve marks, I suggest assigning more interactive modules like the Number Game or Words Game. You can also send a 'Magical Broadcast Message' to motivate them! Keep the learning fun and engaging."
+      ],
+      "role": "teacher"
+    },
+    {
+      "tag": "send_magical_message",
+      "patterns": [
+        "create magical message",
+        "send magical message",
+        "broadcast magical message",
+        "send message to students",
+        "create magical broadcast"
+      ],
+      "responses": [
+        "Sure, magical message is ready to be broadcasted to all students!",
+        "Opening magical message section. Keep the students motivated!"
+      ],
+      "action": "OPEN_MAGICAL_MESSAGE",
+      "role": "teacher"
+    },
+    {
+      "tag": "view_student_progress",
+      "patterns": [
+        "student progress dikhao",
+        "report dikhao",
+        "performance check karo",
+        "analytics dikhao",
+        "show student analytics"
+      ],
+      "responses": [
+        "Fetching student analytics",
+        "Progress dashboard open ho raha hai!",
+        "Here are your insights!"
+      ],
+      "action": "VIEW_ANALYTICS",
+      "role": "teacher"
+    },
+    {
+      "tag": "add_new_student",
+      "patterns": [
+        "naye student ko add karo",
+        "add new student",
+        "enroll new student",
+        "naya bacha admit karo"
+      ],
+      "responses": [
+        "Opening student enrollment panel.",
+        "Sure, let's add a new student to the class database!"
+      ],
+      "action": "ADD_STUDENT",
+      "role": "teacher"
+    }
+  ]
+}

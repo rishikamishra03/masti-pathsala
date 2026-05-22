@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS users (
     role ENUM('student', 'teacher') DEFAULT 'student',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 -- 2. User Avatars Table
 -- Stores the visual customization settings for each user's character
 CREATE TABLE IF NOT EXISTS user_avatars (
@@ -153,7 +152,7 @@ CREATE TABLE IF NOT EXISTS notifications (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE
 );
-
+SELECT * FROM users;
 -- ########################################################
 -- INITIAL DATA SEEDING (Example Data)
 -- ########################################################
