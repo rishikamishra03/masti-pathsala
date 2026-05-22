@@ -108,7 +108,7 @@ Converts text into numerical format
 Trains a Neural Network model
 Saves trained model files
 
-## 🎤 Voice Interaction Workflow
+### 🎤 Voice Interaction Workflow
 User gives voice input
 Speech converts to text
 NLP processes the text
@@ -124,8 +124,8 @@ The objective of Masti Pathshala is to create an engaging educational platform w
 The project focuses on combining education with interactive AI technologies to improve learning experience.
 
 # 👩‍💻 Contributors
-Sakshi Srivastav
-Rishika Mishra
+- Sakshi Srivastav
+- Rishika Mishra
 
 #  📜 License
 
