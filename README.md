@@ -62,7 +62,7 @@ masti-pathsala/
 ├── requirements.txt
 └── README.md
 
-```
+---
 
 # ⚙️ Installation
 
