@@ -1,70 +1,117 @@
-# Getting Started with Create React App
+# 🎓 Masti Pathshala
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Masti Pathshala is an AI-based interactive learning platform developed to make learning more engaging and accessible for children through voice interaction and chatbot-based communication.
 
-## Available Scripts
+The project combines React frontend development with a Flask-based AI backend that uses Natural Language Processing (NLP) and a Neural Network model to understand user queries and generate responses.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+# 🚀 Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- AI chatbot for interactive learning
+- Voice-based interaction
+- Speech-to-Text conversion
+- Text-to-Speech response generation
+- English and Hindi conversation support
+- Intent-based response system
+- Neural Network model training using TensorFlow/Keras
+- Interactive frontend built with React
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+# 🛠️ Technologies Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Frontend
+- React.js
+- JavaScript
+- HTML
+- CSS
 
-### `npm run build`
+## Backend
+- Python
+- Flask
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## AI / Machine Learning
+- TensorFlow
+- Keras
+- NLTK
+- NumPy
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Voice Processing
+- gTTS
+- SpeechRecognition
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+# 📂 Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+masti-pathsala/
+│
+├── ai_backend/
+│   ├── app.py
+│   ├── train.py
+│   ├── intents.json
+│   ├── stt.py
+│   ├── tts.py
+│   └── model training files
+│
+├── src/
+├── public/
+├── package.json
+├── requirements.txt
+└── README.md
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+⚙️ Installation
+1. Clone the Repository
+git clone https://github.com/rishikamishra03/masti-pathsala.git
+cd masti-pathsala
+2. Create Virtual Environment
+python -m venv .venv
+Activate Virtual Environment
+Windows
+.venv\Scripts\activate
+Linux/Mac
+source .venv/bin/activate
+3. Install Backend Dependencies
+pip install -r requirements.txt
+4. Run Flask Backend
+python app.py
+5. Install Frontend Dependencies
+npm install
+6. Start Frontend
+npm start
+🧠 Model Training
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The chatbot model is trained using the data present in intents.json.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+To train the model:
 
-## Learn More
+python train.py
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The training process:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Tokenizes user input
+Applies NLP preprocessing
+Converts text into numerical format
+Trains a Neural Network model
+Saves trained model files
+🎤 Voice Interaction Workflow
+User gives voice input
+Speech converts to text
+NLP processes the text
+Model predicts the intent
+Chatbot generates response
+Response converts to speech output
+📌 Purpose of the Project
 
-### Code Splitting
+The objective of Masti Pathshala is to create an engaging educational platform where children can interact with an AI assistant through voice and text communication.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The project focuses on combining education with interactive AI technologies to improve learning experience.
 
-### Analyzing the Bundle Size
+👩‍💻 Contributors
+Sakshi Srivastav
+Rishika Mishra
+📜 License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the Apache-2.0 License.
