@@ -62,26 +62,37 @@ masti-pathsala/
 ├── requirements.txt
 └── README.md
 
-⚙️ Installation
-1. Clone the Repository
+```
+
+# ⚙️ Installation
+
+## 1. Clone the Repository
 git clone https://github.com/rishikamishra03/masti-pathsala.git
 cd masti-pathsala
-2. Create Virtual Environment
+
+## 2. Create Virtual Environment
 python -m venv .venv
 Activate Virtual Environment
 Windows
 .venv\Scripts\activate
 Linux/Mac
 source .venv/bin/activate
-3. Install Backend Dependencies
+
+## 3. Install Backend Dependencies
 pip install -r requirements.txt
-4. Run Flask Backend
+
+## 4. Run Flask Backend
 python app.py
-5. Install Frontend Dependencies
+
+## 5. Install Frontend Dependencies
 npm install
-6. Start Frontend
+
+## 6. Start Frontend
 npm start
-🧠 Model Training
+
+---
+
+# 🧠 Model Training
 
 The chatbot model is trained using the data present in intents.json.
 
@@ -96,22 +107,26 @@ Applies NLP preprocessing
 Converts text into numerical format
 Trains a Neural Network model
 Saves trained model files
-🎤 Voice Interaction Workflow
+
+## 🎤 Voice Interaction Workflow
 User gives voice input
 Speech converts to text
 NLP processes the text
 Model predicts the intent
 Chatbot generates response
 Response converts to speech output
-📌 Purpose of the Project
+
+
+# 📌 Purpose of the Project
 
 The objective of Masti Pathshala is to create an engaging educational platform where children can interact with an AI assistant through voice and text communication.
 
 The project focuses on combining education with interactive AI technologies to improve learning experience.
 
-👩‍💻 Contributors
+# 👩‍💻 Contributors
 Sakshi Srivastav
 Rishika Mishra
-📜 License
+
+#  📜 License
 
 This project is licensed under the Apache-2.0 License.
